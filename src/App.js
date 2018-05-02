@@ -4,6 +4,7 @@ import './App.css';
 
 import { connect } from 'react-redux';
 import { getBooks, getBook } from './actions/index';
+import { makeGetBookState } from './selector';
 
 class App extends Component {
 
@@ -59,9 +60,11 @@ class App extends Component {
 }
 
 function mapStateToProps({ BookReducer }) {
+  const getBook = makeGetBookState();
+ 
   return {
       books: BookReducer.books,
-      selectedBook: BookReducer.book
+      selectedBook: (state, props) => getBook(state, props) //BookReducer.book
   };
 }
 
